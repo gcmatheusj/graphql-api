@@ -1,11 +1,11 @@
-import {} from "dotenv/config";
+import {} from 'dotenv/config';
 
-import { ApolloServer } from "apollo-server-express";
-import { typeDefs } from "./app/graphql/schemas/typeDefs";
-import { resolvers } from "./app/graphql/resolvers/user";
-import express from "express";
-import mongoose from "mongoose";
-import databaseConfig from "./config/database";
+import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
+import mongoose from 'mongoose';
+import typeDefs from './app/graphql/schemas/typeDefs';
+import resolvers from './app/graphql/resolvers/Tool';
+import databaseConfig from './config/database';
 
 class App {
   constructor() {
@@ -15,17 +15,18 @@ class App {
     this.server();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   database() {
     mongoose.connect(databaseConfig.uri, {
       useNewUrlParser: true,
-      useCreateIndex: true
+      useCreateIndex: true,
     });
   }
 
   server() {
     const server = new ApolloServer({
       typeDefs,
-      resolvers
+      resolvers,
     });
 
     server.applyMiddleware({ app: this.express });
