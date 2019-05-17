@@ -2,7 +2,11 @@ import Tool from '../../models/Tool';
 
 const resolvers = {
   Query: {
-    tool: () => Tool.find(),
+    tools: async () => {
+      const tools = await Tool.find();
+
+      return tools;
+    },
   },
   Mutation: {
     createTool: async (_, args) => {

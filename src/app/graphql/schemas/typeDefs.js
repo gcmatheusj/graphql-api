@@ -10,7 +10,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    tool: Tool!
+    tools: [Tool!]!
   }
 
   type Mutation {
