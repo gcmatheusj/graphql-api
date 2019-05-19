@@ -1,24 +1,18 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const ToolSchema = new Schema({
   title: {
     type: String,
-    required: true,
+    required: true
   },
   link: {
     type: String,
-    required: true,
+    required: true
   },
   description: {
     type: String,
-    required: true,
-  },
-  tags: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+    required: true
+  }
 });
 
-export default model('Tool', ToolSchema);
+export default model("Tool", ToolSchema);

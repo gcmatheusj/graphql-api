@@ -1,11 +1,12 @@
-import {} from 'dotenv/config';
+import {} from "dotenv/config";
 
-import { ApolloServer } from 'apollo-server-express';
-import express from 'express';
-import mongoose from 'mongoose';
-import typeDefs from './app/graphql/schemas/typeDefs';
-import resolvers from './app/graphql/resolvers/Tool';
-import databaseConfig from './config/database';
+import { ApolloServer } from "apollo-server-express";
+import express from "express";
+import mongoose from "mongoose";
+import typeDefs from "./app/graphql/schemas";
+import resolvers from "./app/graphql/resolvers";
+import databaseConfig from "./config/database";
+import getUser from "./app/utils/auth/GetUser";
 
 class App {
   constructor() {
@@ -15,11 +16,10 @@ class App {
     this.server();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   database() {
     mongoose.connect(databaseConfig.uri, {
       useNewUrlParser: true,
-      useCreateIndex: true,
+      useCreateIndex: true
     });
   }
 
@@ -27,6 +27,13 @@ class App {
     const server = new ApolloServer({
       typeDefs,
       resolvers,
+      context: ({ req }) => {
+        const token = req.headers.authorization || "";
+
+        const user = getUser(token);
+
+        return { user };
+      }
     });
 
     server.applyMiddleware({ app: this.express });
